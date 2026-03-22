@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Setup Guide - Get Claude on Your Computer | Gal Steinman</title>
+<meta name="description" content="A complete walkthrough for finance professionals. Mac or PC. Desktop or Code. 15 minutes to set up.">
+<meta property="og:title" content="Claude Setup Guide - Get Claude on Your Computer">
+<meta property="og:description" content="Get Claude on your computer. Query anything in plain English. 15-minute setup for Mac or PC.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0b0f; color: #e2e8f0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+a { color: #818cf8; text-decoration: none; }
+
+/* HERO */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 24px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at center, rgba(99,102,241,0.08) 0%, transparent 60%); pointer-events: none; }
+.hero-badge { display: inline-block; background: #1e1b4b; color: #a78bfa; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; letter-spacing: 1px; text-transform: uppercase; border: 1px solid #312e81; }
+.hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 900; color: #f1f5f9; letter-spacing: -2px; line-height: 1.1; margin-bottom: 16px; max-width: 700px; }
+.hero h1 span { background: linear-gradient(135deg, #6366f1, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 18px; color: #94a3b8; max-width: 520px; margin-bottom: 40px; }
+.hero-stats { display: flex; gap: 40px; margin-bottom: 48px; }
+.stat { text-align: center; }
+.stat-num { font-size: 42px; font-weight: 900; color: #22d3ee; line-height: 1; }
+.stat-label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+.scroll-hint { position: absolute; bottom: 32px; color: #475569; font-size: 13px; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+/* SECTIONS */
+.section { max-width: 900px; margin: 0 auto; padding: 80px 24px; }
+.section-label { font-size: 11px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+.section h2 { font-size: 32px; font-weight: 800; color: #f1f5f9; letter-spacing: -1px; margin-bottom: 20px; }
+.section p { color: #94a3b8; font-size: 16px; margin-bottom: 16px; }
+
+/* PIPELINE */
+.pipeline-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 32px 0; }
+.pipe-step { background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 16px 18px; transition: border-color 0.2s, transform 0.2s; }
+.pipe-step:hover { border-color: #4338ca; transform: translateY(-2px); }
+.pipe-num { font-size: 10px; font-weight: 800; color: #6366f1; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+.pipe-text { font-size: 14px; color: #cbd5e1; line-height: 1.5; }
+.pipe-step.output { background: #1e1b4b; border-color: #4338ca; }
+.pipe-step.output .pipe-num { color: #fbbf24; }
+.pipe-step.output .pipe-text { color: #f1f5f9; font-weight: 600; }
+
+/* CLAUDE CARDS (replaces connectors) */
+.claude-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 24px 0; }
+.claude-card { background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 24px; text-align: center; transition: border-color 0.2s, transform 0.2s; }
+.claude-card:hover { border-color: #4338ca; transform: translateY(-2px); }
+.claude-card-icon { font-size: 28px; margin-bottom: 10px; }
+.claude-card-name { font-size: 17px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
+.claude-card-desc { font-size: 14px; color: #94a3b8; line-height: 1.5; }
+.claude-card.covered { border-color: #22d3ee; }
+.claude-card.covered .claude-card-name::after { content: ' '; }
+.claude-card.not-covered { opacity: 0.6; }
+.claude-card.not-covered .claude-card-name { color: #64748b; }
+.claude-note { text-align: center; margin-top: 20px; }
+.claude-note p { color: #64748b; font-size: 14px; line-height: 1.6; }
+.claude-note span { color: #a78bfa; }
+
+/* PURPLE COW */
+.purple-section { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 1px solid #4338ca; border-radius: 16px; padding: 40px; margin: 48px 0; text-align: center; }
+.purple-section h3 { font-size: 24px; font-weight: 800; color: #a78bfa; margin-bottom: 16px; }
+.purple-quote { font-size: 20px; color: #e2e8f0; font-style: italic; max-width: 500px; margin: 0 auto 12px; line-height: 1.5; }
+.purple-result { color: #4ade80; font-size: 16px; font-weight: 600; }
+.purple-sub { color: #64748b; font-size: 14px; margin-top: 8px; }
+
+/* FORM */
+.form-section { background: #0f172a; border-top: 1px solid #1e293b; border-bottom: 1px solid #1e293b; padding: 80px 24px; text-align: center; }
+.form-container { max-width: 520px; margin: 0 auto; }
+.form-container h2 { font-size: 28px; font-weight: 800; color: #f1f5f9; margin-bottom: 8px; }
+.form-container p { color: #94a3b8; margin-bottom: 28px; font-size: 15px; }
+.form-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.form-input { flex: 1; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 14px 18px; font-size: 15px; color: #f1f5f9; font-family: inherit; outline: none; transition: border-color 0.2s; }
+.form-input:focus { border-color: #6366f1; }
+.form-input::placeholder { color: #475569; }
+.form-btn { background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 14px 28px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
+.form-btn:hover { background: #4f46e5; }
+.form-btn:active { transform: scale(0.98); }
+.form-note { font-size: 12px; color: #475569; margin-top: 8px; }
+.form-success { display: none; background: #14532d; border: 1px solid #166534; border-radius: 10px; padding: 20px; margin-top: 16px; }
+.form-success h4 { color: #4ade80; font-size: 16px; margin-bottom: 4px; }
+.form-success p { color: #86efac; font-size: 14px; }
+
+/* WHAT YOU GET */
+.get-list { list-style: none; margin: 24px 0; }
+.get-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; font-size: 15px; color: #cbd5e1; }
+.get-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+.get-dot.g { background: #22c55e; }
+.get-dot.b { background: #3b82f6; }
+.get-dot.a { background: #f59e0b; }
+.get-dot.p { background: #a78bfa; }
+
+/* FOOTER */
+.footer { text-align: center; padding: 48px 24px; border-top: 1px solid #1e293b; }
+.footer-name { font-size: 18px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px; }
+.footer-title { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+.footer-series { font-size: 13px; color: #6366f1; font-weight: 600; margin-bottom: 16px; }
+.footer-tagline { font-size: 14px; color: #6366f1; font-weight: 600; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .hero-stats { flex-direction: column; gap: 20px; }
+  .form-row { flex-direction: column; }
+  .pipeline-grid { grid-template-columns: 1fr; }
+  .claude-cards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">No technical background needed</div>
+  <h1>Get Claude on your computer.<br><span>Query anything in plain English.</span></h1>
+  <p class="hero-sub">A complete walkthrough for finance professionals. Mac or PC. Desktop or Code. 15 minutes to set up.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">15</div><div class="stat-label">Min setup</div></div>
+    <div class="stat"><div class="stat-num">Mac + PC</div><div class="stat-label">Both covered</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Desktop + Code</div></div>
+  </div>
+  <a href="#get-guide" style="background: #6366f1; color: #fff; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 15px; transition: background 0.2s;">Get the Free Guide</a>
+  <div class="scroll-hint">Scroll to see what you'll learn</div>
+</section>
+
+<!-- PIPELINE -->
+<section class="section">
+  <div class="section-label">What you'll learn</div>
+  <h2>From zero to querying your data in plain English</h2>
+
+  <div class="pipeline-grid">
+    <div class="pipe-step"><div class="pipe-num">Step 1</div><div class="pipe-text">Which Claude version to install (Desktop vs Code)</div></div>
+    <div class="pipe-step"><div class="pipe-num">Step 2</div><div class="pipe-text">Download and install on Mac or PC</div></div>
+    <div class="pipe-step"><div class="pipe-num">Step 3</div><div class="pipe-text">Set up your subscription</div></div>
+    <div class="pipe-step"><div class="pipe-num">Step 4</div><div class="pipe-text">Authenticate and verify</div></div>
+    <div class="pipe-step"><div class="pipe-num">Step 5</div><div class="pipe-text">Run your first query</div></div>
+    <div class="pipe-step"><div class="pipe-num">Step 6</div><div class="pipe-text">Connect to external systems (MCP)</div></div>
+    <div class="pipe-step"><div class="pipe-num">Step 7</div><div class="pipe-text">Troubleshoot common issues</div></div>
+    <div class="pipe-step output"><div class="pipe-num">Result</div><div class="pipe-text">Ready to connect Claude to NetSuite, Gmail, and more</div></div>
+  </div>
+</section>
+
+<!-- WHAT'S CLAUDE? -->
+<section class="section" style="padding-top: 0;">
+  <div class="section-label">What's Claude?</div>
+  <h2>Three versions. Two that matter.</h2>
+  <p>Claude comes in different forms. Here's which ones you need and why.</p>
+
+  <div class="claude-cards">
+    <div class="claude-card covered">
+      <div class="claude-card-icon">&#128421;</div>
+      <div class="claude-card-name">Claude Desktop</div>
+      <div class="claude-card-desc">Regular app. Like Word or Excel. Click to open, type to ask.</div>
+    </div>
+    <div class="claude-card covered">
+      <div class="claude-card-icon">&#9000;</div>
+      <div class="claude-card-name">Claude Code</div>
+      <div class="claude-card-desc">Terminal-based. Connects to enterprise systems. Powers automation.</div>
+    </div>
+    <div class="claude-card not-covered">
+      <div class="claude-card-icon">&#127760;</div>
+      <div class="claude-card-name">claude.ai</div>
+      <div class="claude-card-desc">Web browser only. Can't connect to your systems.</div>
+    </div>
+  </div>
+  <div class="claude-note">
+    <p>This guide covers Desktop and Code. Both are free to install with a Pro subscription <span>($20/month)</span>.</p>
+  </div>
+</section>
+
+<!-- PURPLE COW -->
+<section class="section" style="padding-top: 0;">
+  <div class="purple-section">
+    <h3>The part nobody tells you</h3>
+    <p class="purple-quote">"I'm a CPA. I've never written a line of code. I connected my ERP to AI in one afternoon."</p>
+    <p class="purple-result">197 finance professionals asked me how.</p>
+    <p class="purple-sub">This guide is Step 1. Getting Claude on your computer.</p>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="section" style="padding-top: 0;">
+  <div class="section-label">Inside the guide</div>
+  <h2>What's in the guide</h2>
+  <ul class="get-list">
+    <li><span class="get-dot g"></span>Claude Desktop installation (Mac + PC) - step by step with screenshots</li>
+    <li><span class="get-dot g"></span>Claude Code installation (Mac + PC) - terminal commands with copy buttons</li>
+    <li><span class="get-dot b"></span>Desktop vs Code - when to use each</li>
+    <li><span class="get-dot b"></span>Subscription setup and authentication</li>
+    <li><span class="get-dot a"></span>5 common errors and how to fix them</li>
+    <li><span class="get-dot p"></span>What's next: connecting to NetSuite (Part 2)</li>
+  </ul>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="get-guide">
+  <div class="form-container">
+    <h2>Get the complete setup guide</h2>
+    <p>Step-by-step walkthrough with copy-paste commands. Takes 15 minutes. Zero code.</p>
+    <form id="leadForm" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <input type="text" name="name" class="form-input" placeholder="Your name" required maxlength="100" autocomplete="name">
+      </div>
+      <div class="form-row">
+        <input type="email" name="email" class="form-input" placeholder="Your work email" required maxlength="254" autocomplete="email">
+        <button type="submit" class="form-btn" id="submitBtn">Send me the guide</button>
+      </div>
+      <!-- Honeypot: invisible to humans, bots fill it automatically -->
+      <input type="text" name="website" style="position:absolute;left:-9999px;opacity:0;height:0;" tabindex="-1" autocomplete="off">
+      <p class="form-note">No spam. Just the guide.</p>
+    </form>
+    <div id="formError" style="display:none; background:#1c1017; border:1px solid #7f1d1d; border-radius:10px; padding:16px; margin-top:12px;">
+      <p style="color:#fca5a5; font-size:14px;" id="errorMsg"></p>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <h4>Check your inbox</h4>
+      <p>The setup guide is on its way. If you don't see it in 2 minutes, check your spam folder.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-name">Gal Steinman</div>
+  <div class="footer-title">CPA | Head of Finance | AI Builder</div>
+  <div class="footer-series">Part 1 of the Finance + AI Setup Series</div>
+  <div class="footer-tagline">Built by a CPA who types English, not Python.</div>
+</footer>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyXDqO2AQq2GmAwWMnAzXaSxoN8jWaARLxK8TNI9xeViR1ngsmr8OWwGSRQCmH_3zveTQ/exec';
+
+// SECURITY: Track submissions to prevent abuse
+const STORAGE_KEY = 'claude_guide_submitted';
+const RATE_KEY = 'claude_guide_last_submit';
+
+function showError(msg) {
+  const el = document.getElementById('formError');
+  document.getElementById('errorMsg').textContent = msg;
+  el.style.display = 'block';
+}
+
+function sanitize(str) {
+  return str.replace(/[<>&"'\/\\]/g, '').trim().substring(0, 254);
+}
+
+function isValidEmail(email) {
+  const re = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+  if (!re.test(email)) return false;
+  // Block disposable email domains
+  const blocked = ['mailinator.com','tempmail.com','guerrillamail.com','throwaway.email',
+    'yopmail.com','sharklasers.com','trashmail.com','10minutemail.com','temp-mail.org',
+    'fakeinbox.com','maildrop.cc','dispostable.com','getnada.com'];
+  const domain = email.split('@')[1].toLowerCase();
+  return !blocked.includes(domain);
+}
+
+async function submitForm(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const form = document.getElementById('leadForm');
+  const success = document.getElementById('formSuccess');
+  const errorEl = document.getElementById('formError');
+  errorEl.style.display = 'none';
+
+  // SECURITY 1: Honeypot - if filled, it's a bot
+  const honeypot = form.querySelector('input[name="website"]');
+  if (honeypot && honeypot.value) {
+    form.style.display = 'none';
+    success.style.display = 'block';
+    return; // Silently ignore bots
+  }
+
+  // SECURITY 2: Already submitted from this browser
+  if (localStorage.getItem(STORAGE_KEY)) {
+    showError('You have already requested the guide. Check your inbox (and spam folder).');
+    return;
+  }
+
+  // SECURITY 3: Rate limiting - max 1 submission per 60 seconds
+  const lastSubmit = parseInt(localStorage.getItem(RATE_KEY) || '0');
+  if (Date.now() - lastSubmit < 60000) {
+    showError('Please wait a moment before trying again.');
+    return;
+  }
+
+  const rawName = form.querySelector('input[name="name"]').value;
+  const rawEmail = form.querySelector('input[name="email"]').value;
+
+  // SECURITY 4: Input sanitization
+  const name = sanitize(rawName);
+  const email = sanitize(rawEmail).toLowerCase();
+
+  // SECURITY 5: Name validation
+  if (name.length < 2 || name.length > 100) {
+    showError('Please enter a valid name.');
+    return;
+  }
+
+  // SECURITY 6: Email validation + disposable email blocking
+  if (!isValidEmail(email)) {
+    showError('Please enter a valid work or personal email address.');
+    return;
+  }
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  localStorage.setItem(RATE_KEY, Date.now().toString());
+
+  try {
+    await fetch(GOOGLE_SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        source: 'claude-setup-guide',
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    // Mark as submitted in this browser
+    localStorage.setItem(STORAGE_KEY, 'true');
+    form.style.display = 'none';
+    success.style.display = 'block';
+  } catch (err) {
+    btn.textContent = 'Try again';
+    btn.disabled = false;
+    showError('Something went wrong. Please try again.');
+  }
+}
+</script>
+
+</body>
+</html>
